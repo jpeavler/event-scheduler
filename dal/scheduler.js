@@ -59,6 +59,30 @@ const getEventById = () => {
     return myPromise;
 }
 
+//CREATE function
+const addEvent = (myEvent) => {
+    const myPromise = new Promise((resolve, reject) => {
+        MongoClient.connect(url, settings, function(err, clent) {
+            if(err) {
+                reject(err);
+            } else {
+                console.log("Connected to DB for CREATE event");
+                const db = client.db(dbName);
+                const collection = db.collection(colName);
+                collection.insertOne(myEvent, (err, result) => {
+                    if(err) {
+                        reject(err);
+                    } else {
+                        resolve(result.ops[0]);
+                        client.close();
+                    }
+                });
+            }
+        });
+    });
+    return myPromise;
+}
+
 module.exports = {
     getEvents,
     getEventById
