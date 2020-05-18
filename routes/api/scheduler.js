@@ -32,6 +32,20 @@ router.get('/:id', async function(req, res) {
             res.status(500).send('Internal Servier issue, check logs');
         }
     }
-})
+});
+
+router.post('/', async function(req, res) {
+    try {
+        const newEvent = await addEvent(req.body);
+        res.send(newEvent);
+    } catch(err) {
+        if(err.error) {
+            res.status(400).send(err);
+        } else {
+            console.log(err);
+            res.status(500).send('Internal Server issue, check logs');
+        }
+    }
+});
 
 module.exports = router;
