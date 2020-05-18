@@ -62,7 +62,7 @@ const getEventById = () => {
 //CREATE function
 const addEvent = (myEvent) => {
     const myPromise = new Promise((resolve, reject) => {
-        MongoClient.connect(url, settings, function(err, clent) {
+        MongoClient.connect(url, settings, function(err, client) {
             if(err) {
                 reject(err);
             } else {
@@ -83,7 +83,33 @@ const addEvent = (myEvent) => {
     return myPromise;
 }
 
+//UPDATE: Put function
+const updateEvent = (id, myEvent) => {
+    const myPromise = new Promise((resolve, reject) => {
+        MongoClient.connect(url, settings, function(err, client) {
+            if(err) {
+                reject(err);
+            } else {
+                console.log('Connected to DB for UPDATE: PUT');
+                const db = client.db(dbName);
+                const collection = db.collection(colName);
+                collection.replaceOne({_id: ObjectID(id)}, myEvent,
+                {upsert: true}, (err, result) => {
+                    if(err) {
+                        reject(err);
+                    } else {
+                        resolve({updated_id: id});
+                        client.close;
+                    }
+                });
+            }
+        });
+    });
+    return myPromise;
+}
+
 module.exports = {
     getEvents,
-    getEventById
+    getEventById,
+    addEvent,
 }
