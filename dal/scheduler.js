@@ -108,8 +108,48 @@ const updateEvent = (id, myEvent) => {
     return myPromise;
 }
 
+//UPDATE: Patch function
+const updateEventValues = (id, myEvent) => {
+    const myPromise = new Promise((resolve, reject) => {
+        MongoClient.connect(url, settings, function(err, client) {
+            if(err) {
+                reject(err);
+            } else {
+                console.log('Connected to DB for UPDATE: PATCH');
+                const db = client.db(dbName);
+                const collection = db.colllection(colName);
+                try {
+                    const _id = new ObjectID(id);
+                    collection.updateOne({_id}, {$set: {...myEvent}}, function (err, data){
+                            if(err) {
+                                reject(err);
+                            }else{
+                                if(data.result.n > 0) {
+                                    collection.find({_id}).toArray(function(err, docs){
+                                            if(err) {
+                                                reject(err);
+                                            }else{
+                                                resolve(docs[0]);
+                                            }
+                                        });
+                                }else{
+                                    resolve({error: "Nothing happened"});
+                                }
+                            }
+                        });
+                } catch(err) {
+                    reject({error: "ID has to be in ObjectID format"});
+                }
+            }
+        });
+    });
+    return myPromise;
+}
+
 module.exports = {
     getEvents,
     getEventById,
     addEvent,
+    updateEvent,
+    updateEventValues
 }
