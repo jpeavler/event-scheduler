@@ -34,6 +34,7 @@ router.get('/:id', async function(req, res) {
     }
 });
 
+//Post router
 router.post('/', async function(req, res) {
     try {
         const newEvent = await addEvent(req.body);
@@ -47,5 +48,20 @@ router.post('/', async function(req, res) {
         }
     }
 });
+
+//Put router
+router.put('/:id', async function(req, res) {
+    try {
+        const updatedEvent = await updateEvent(req.params.id, req.body);
+        res.send(updatedEvent);
+    } catch(err) {
+        if(err.error) {
+            res.status(400).send(err);
+        } else {
+            console.log(err);
+            res.status(500).send("Internal Server issue, check logs");
+        }
+    }
+})
 
 module.exports = router;
