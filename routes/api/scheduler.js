@@ -66,7 +66,7 @@ router.put('/:id', async function(req, res) {
 
 //Patch router
 router.patch('/:id', async function(req, res) {
-    try{
+    try {
         const updatedEValues = await updateEventValues(req.params.id, req.body);
         res.send(updatedEValues);
     } catch(err) {
@@ -74,9 +74,24 @@ router.patch('/:id', async function(req, res) {
             res.status(400).send(err);
         } else {
             console.log(err);
-            res.status(500).send("Internal Server issue, chekc logs");
+            res.status(500).send("Internal Server issue, check logs");
         }
     }
-})
+});
+
+//Delete router
+router.delete('/:id', async function(req, res) {
+    try {
+        const eventRemoved = await deleteEvent(req.params.id);
+        res.send(eventRemoved);
+    } catch(err) {
+        if(err.error) {
+            res.status(400).send(err);
+        } else {
+            console.log(err);
+            res.status(500).send("Internal Server issue, check logs");
+        }
+    }
+});
 
 module.exports = router;
