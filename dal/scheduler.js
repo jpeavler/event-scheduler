@@ -33,7 +33,7 @@ const getEvents = () => {
     });
     return myPromise;
 }
-const getEventById = () => {
+const getEventById = (id) => {
     const myPromise = new Promise((resolve, reject) => {
         MongoClient.connect(url, settings, async function(err, client) {
             if(err) {
