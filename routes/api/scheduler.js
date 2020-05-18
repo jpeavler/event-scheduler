@@ -62,6 +62,21 @@ router.put('/:id', async function(req, res) {
             res.status(500).send("Internal Server issue, check logs");
         }
     }
+});
+
+//Patch router
+router.patch('/:id', async function(req, res) {
+    try{
+        const updatedEValues = await updateEventValues(req.params.id, req.body);
+        res.send(updatedEValues);
+    } catch(err) {
+        if(err.error) {
+            res.status(400).send(err);
+        } else {
+            console.log(err);
+            res.status(500).send("Internal Server issue, chekc logs");
+        }
+    }
 })
 
 module.exports = router;
