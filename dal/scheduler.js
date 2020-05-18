@@ -34,7 +34,7 @@ const getEvents = () => {
 }
 const getEventById = () => {
     const myPromise = new Promise((resolve, reject) => {
-        MongoClient.connect(url, settings, function(err, client) {
+        MongoClient.connect(url, settings, async function(err, client) {
             if(err) {
                 reject(err);
             }else {
