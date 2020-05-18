@@ -118,7 +118,7 @@ const updateEventValues = (id, myEvent) => {
             } else {
                 console.log('Connected to DB for UPDATE: PATCH');
                 const db = client.db(dbName);
-                const collection = db.colllection(colName);
+                const collection = db.collection(colName);
                 try {
                     const _id = new ObjectID(id);
                     collection.updateOne({_id}, {$set: {...myEvent}}, function (err, data){
