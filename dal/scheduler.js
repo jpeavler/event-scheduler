@@ -24,6 +24,7 @@ const getEvents = () => {
                         reject(err);
                     } else {
                         console.log("Found the requested events");
+                        resolve(docs);
                         client.close();
                     }
                 });
