@@ -18,16 +18,24 @@ const EventForm = () => {
         console.log('stringed date', fullDate.toString());
         const addedEvent = {name, desc, date: fullDate, type, archived};
         console.log("New Event: ", addedEvent);
+        // fetch(`${process.env.REACT_APP_API_URL}/api/`)
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <input placeholder="Event Name" value={name} type="text" onChange={({target}) => setName(target.value)}/>
-            <textarea placeholder="Event Description" value={desc} type="text" onChange={({target}) => setDesc(target.value)}/>
-            <input placeholder="" value={date} type="date" onChange={({target}) => setDate(target.value)}/>
-            <input placeholder="" value={time} type="time" onChange={({target}) => setTime(target.value)}/>
+            <input placeholder="Event Name" value={name} type="text" 
+                onChange={({target}) => setName(target.value)}/>
+            <textarea placeholder="Event Description" value={desc} type="text" 
+                onChange={({target}) => setDesc(target.value)}/>
+            <label htmlFor="date">Event Date:</label>
+            <input value={date} id="date" type="date" 
+                onChange={({target}) => setDate(target.value)}/>
+            <label htmlFor="date">Event Time:</label>
+            <input value={time} id= "time" type="time" 
+                onChange={({target}) => setTime(target.value)}/>
             <label htmlFor="type">Event Type:</label>
-            <select value={type} id="type" onChange={({target}) => setType(target.value)}>
+            <select value={type} id="type" 
+                onChange={({target}) => setType(target.value)}>
                 <option value= "Appointment">Appointment</option>
                 <option value= "Meeting">Meeting</option>
                 <option value= "Reminder">Reminder</option>
