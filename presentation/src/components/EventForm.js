@@ -11,13 +11,10 @@ const EventForm = () => {
         e.preventDefault();
         const archived = false;
         const fullDate = new Date(date);
-        console.log("Time: ", time);
         fullDate.setDate(fullDate.getDate() + 1);   //have to add one to date since date value captured by form starts at index 0
         fullDate.setHours(time.slice(0, 2));
         fullDate.setMinutes(time.slice(3, 5));
-        console.log('stringed date', fullDate.toString());
         const addedEvent = {name, desc, date: fullDate, type, archived};
-        console.log("New Event: ", addedEvent);
         fetch(`${process.env.REACT_APP_API_URL}/api/scheduler`, {
             method: 'POST',
             headers: {'Content-Type' : 'application/json'},
