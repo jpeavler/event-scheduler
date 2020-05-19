@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 const EventForm = () => {
     const [name, setName] = useState('');
@@ -18,7 +18,15 @@ const EventForm = () => {
         console.log('stringed date', fullDate.toString());
         const addedEvent = {name, desc, date: fullDate, type, archived};
         console.log("New Event: ", addedEvent);
-        // fetch(`${process.env.REACT_APP_API_URL}/api/`)
+        fetch(`${process.env.REACT_APP_API_URL}/api/scheduler`, {
+            method: 'POST',
+            headers: {'Content-Type' : 'application/json'},
+            body: JSON.stringify(addedEvent)
+        }).then(() => setName(''))
+            .then(() => setDesc(''))
+            .then(() => setDate(''))
+            .then(() => setTime(''))
+            .then(() => setType(''));
     }
 
     return (
