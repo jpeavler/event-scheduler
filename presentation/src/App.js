@@ -1,11 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
-import EventForm from './components/EventForm'
+import ListView from './components/ListView';
 
 function App() {
   return (
-    <EventForm/>
+    <div className="App">
+      <ListView/>
+    </div>
   );
 }
 

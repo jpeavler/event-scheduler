@@ -5,7 +5,7 @@ const EventForm = () => {
     const [desc, setDesc] = useState('');
     const [date, setDate] = useState('');   //Stores Month, Day, and Year
     const [time, setTime] = useState('');   //Stores Hour, Minutes, and AM/PM
-    const [type, setType] = useState('');
+    const [type, setType] = useState('Appointment');
 
     const handleSubmit = (e) => {           //While I usually spell out event, I don't here because of event becoming overloaded
         e.preventDefault();
