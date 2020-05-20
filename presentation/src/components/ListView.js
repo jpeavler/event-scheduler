@@ -21,15 +21,16 @@ const ListView = () => {
             displayHour = parseInt(displayHour) - 12;
             midday = "PM";
         }
-        let displayMin = displayDate.getMinutes();
-        console.log("Minutes", displayMin)          //Ensures that minute display is always 2 digits
-        if (parseInt(displayMin) < 10){
+        let displayMin = displayDate.getMinutes(); 
+        if (parseInt(displayMin) < 10){             //Ensures that minute display is always 2 digits
             displayMin = '0'.concat(displayMin);
         }
         return (
             <>
-                <h3>{event.name}- {displayDate.toDateString()} {displayHour}:{displayMin}{midday}</h3>  
-                <p>{event.desc}</p>
+                <h3>{event.name}- {displayDate.toDateString()} at {displayHour}:{displayMin}{midday}</h3> 
+                <button>Edit</button>
+                <button>Delete</button> 
+                <p>{event.type}. {event.desc}</p>
             </>
         )
     })
