@@ -1,11 +1,26 @@
 import React, {useState} from 'react';
 
-const EventForm = () => {
-    const [name, setName] = useState('');
-    const [desc, setDesc] = useState('');
-    const [date, setDate] = useState('');   //Stores Month, Day, and Year
-    const [time, setTime] = useState('');   //Stores Hour, Minutes, and AM/PM
-    const [type, setType] = useState('Appointment');
+const EventForm = ({refresh, myEvent, id}) => {
+    let formName = "";
+    let formDesc = "";
+    let formDate = "";
+    let formTime = "";
+    let formType = "Appointment";
+    if(myEvent){               //if I want an update form instead of an add form, I want to plug in the initial values
+        console.log("Hello world")
+        formName = myEvent.name;
+        formDesc = myEvent.desc;
+        formDate = myEvent.date;
+        formTime = myEvent.time;
+        formType = myEvent.type;
+    }
+    const [name, setName] = useState(formName);
+    const [desc, setDesc] = useState(formDesc);
+    const [date, setDate] = useState(formDate);   //Stores Month, Day, and Year
+    const [time, setTime] = useState(formTime);   //Stores Hour, Minutes, and AM/PM
+    const [type, setType] = useState(formType);
+
+
 
     const handleSubmit = (e) => {           //While I usually spell out event, I don't here because of event becoming overloaded
         e.preventDefault();
@@ -14,16 +29,32 @@ const EventForm = () => {
         fullDate.setDate(fullDate.getDate() + 1);   //have to add one to date since date value captured by form starts at index 0
         fullDate.setHours(time.slice(0, 2));
         fullDate.setMinutes(time.slice(3, 5));
-        const addedEvent = {name, desc, date: fullDate, type, archived};
-        fetch(`${process.env.REACT_APP_API_URL}/api/scheduler`, {
-            method: 'POST',
-            headers: {'Content-Type' : 'application/json'},
-            body: JSON.stringify(addedEvent)
-        }).then(() => setName(''))
+        if(myEvent) {
+            const updatedEvent = {name, desc, date: fullDate, type, archived}
+            fetch(`${process.env.REACT_APP_API_URL}/api/scheduler/${id}`, {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(updatedEvent)
+            }).then(() => setName(''))
             .then(() => setDesc(''))
             .then(() => setDate(''))
             .then(() => setTime(''))
-            .then(() => setType(''));
+            .then(() => setType(''))
+            .then(() => refresh())
+        }else {
+            const addedEvent = {name, desc, date: fullDate, type, archived};
+            fetch(`${process.env.REACT_APP_API_URL}/api/scheduler`, {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(addedEvent)
+            }).then(() => setName(''))
+                .then(() => setDesc(''))
+                .then(() => setDate(''))
+                .then(() => setTime(''))
+                .then(() => setType(''))
+                .then(() => refresh())
+        }
+        
     }
 
     return (
