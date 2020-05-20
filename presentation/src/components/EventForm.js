@@ -7,13 +7,17 @@ const EventForm = ({refresh, myEvent, id}) => {
     let formTime = "";
     let formType = "Appointment";
     if(myEvent){               //if I want an update form instead of an add form, I want to plug in the initial values
-        console.log("Hello world")
         formName = myEvent.name;
         formDesc = myEvent.desc;
-        formDate = myEvent.date;
-        formTime = myEvent.time;
+        formDate = myEvent.date.slice(0, 10);
+        let tempDate = new Date(myEvent.date);
+        formTime = tempDate.toLocaleTimeString();
+        let midday = formTime.slice(8, 10);
+        console.log("AM or PM? ", midday);
+        formTime = formTime.slice(0, 4).concat(" ", midday);
         formType = myEvent.type;
     }
+    console.log("Form Time: ",formTime);
     const [name, setName] = useState(formName);
     const [desc, setDesc] = useState(formDesc);
     const [date, setDate] = useState(formDate);   //Stores Month, Day, and Year
@@ -60,15 +64,15 @@ const EventForm = ({refresh, myEvent, id}) => {
     return (
         <form onSubmit={handleSubmit}>
             <input placeholder="Event Name" value={name} type="text" 
-                onChange={({target}) => setName(target.value)}/>
+                onChange={({target}) => setName(target.value)} required/>
             <textarea placeholder="Event Description" value={desc} type="text" 
                 onChange={({target}) => setDesc(target.value)}/>
             <label htmlFor="date">Event Date:</label>
             <input value={date} id="date" type="date" 
-                onChange={({target}) => setDate(target.value)}/>
+                onChange={({target}) => setDate(target.value)} required/>
             <label htmlFor="date">Event Time:</label>
             <input value={time} id= "time" type="time" 
-                onChange={({target}) => setTime(target.value)}/>
+                onChange={({target}) => setTime(target.value)} required/>
             <label htmlFor="type">Event Type:</label>
             <select value={type} id="type" 
                 onChange={({target}) => setType(target.value)}>

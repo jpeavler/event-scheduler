@@ -15,13 +15,12 @@ const ListView = () => {
             .then(response => response.json())
             .then(list => setList(list))
             .then(setUpdate(false))
+            .then(setEventToUpdate(''))
     }
     const handleUpdate = (eventUp) => {
         setEventToUpdate(eventUp);
         setUpdate(true);
     }
-    console.log("Update Form rendered:", update);
-    console.log("Event to Update:", eventToUpdate);
 
     const displayList = list.map((myEvent) => {
         const displayDate = new Date(myEvent.date);
