@@ -15,18 +15,21 @@ const ListView = () => {
     }
     const displayList = list.map((event) => {
         const displayDate = new Date(event.date);
-        const displayHour = displayDate.getHours();
-        const displayMin = displayDate.getMinutes();
+        let midday = "AM";
+        let displayHour = displayDate.getHours();
+        if (parseInt(displayHour) > 12) {           //Converts military time to actual time
+            displayHour = parseInt(displayHour) - 12;
+            midday = "PM";
+        }
+        let displayMin = displayDate.getMinutes();
+        console.log("Minutes", displayMin)          //Ensures that minute display is always 2 digits
+        if (parseInt(displayMin) < 10){
+            displayMin = '0'.concat(displayMin);
+        }
         return (
             <>
-                <h3>{event.name}</h3>
-                <ul>    
-                    <li>{event.desc}</li>
-                    <li>{displayDate.toDateString()}</li>
-                    <li>{displayHour}:{displayMin}</li>
-                    <li>{event.type}</li>
-                    <li>{event.archived}</li>
-                </ul>
+                <h3>{event.name}- {displayDate.toDateString()} {displayHour}:{displayMin}{midday}</h3>  
+                <p>{event.desc}</p>
             </>
         )
     })
