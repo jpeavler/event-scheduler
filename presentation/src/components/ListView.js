@@ -40,12 +40,12 @@ const ListView = () => {
             displayMin = '0'.concat(displayMin);
         }
         return (
-            <>
+            <div key={myEvent._id} className="event">
                 <h3>{myEvent.name}- {displayDate.toDateString()} at {displayHour}:{displayMin}{midday}</h3> 
                 <button onClick={() => handleUpdate(myEvent)}>Edit</button>
                 <button>Delete</button> 
                 <p>{myEvent.type}. {myEvent.desc}</p>
-            </>
+            </div>
         )
     });
 
