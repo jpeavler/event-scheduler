@@ -26,9 +26,14 @@ const ListView = () => {
         const displayDate = new Date(myEvent.date);
         let midday = "AM";
         let displayHour = displayDate.getHours();
-        if (parseInt(displayHour) > 12) {           //Converts military time to actual time
-            displayHour = parseInt(displayHour) - 12;
+        if (parseInt(displayHour) >= 12) {           //Converts military time to actual time
             midday = "PM";
+        }
+        if (parseInt(displayHour) > 12) {
+            displayHour = parseInt(displayHour) - 12;
+        }
+        if (parseInt(displayHour) == 0) {
+            displayHour = parseInt(displayHour) + 12;
         }
         let displayMin = displayDate.getMinutes(); 
         if (parseInt(displayMin) < 10){             //Ensures that minute display is always 2 digits

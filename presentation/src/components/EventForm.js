@@ -11,10 +11,17 @@ const EventForm = ({refresh, myEvent, id}) => {
         formDesc = myEvent.desc;
         formDate = myEvent.date.slice(0, 10);
         let tempDate = new Date(myEvent.date);
-        formTime = tempDate.toLocaleTimeString();
-        let midday = formTime.slice(8, 10);
-        console.log("AM or PM? ", midday);
-        formTime = formTime.slice(0, 4).concat(" ", midday);
+        let tempHour = tempDate.getHours();
+        let tempMin = tempDate.getMinutes();
+        console.log("TempHour: ", tempHour);
+        if(tempHour < 10) {
+            tempHour = '0' + tempHour;
+        }
+        if(tempMin < 10) {
+            tempMin = '0' + tempMin;
+        }
+        console.log("TempMin: ", tempMin);
+        formTime = tempHour + ":" + tempMin;
         formType = myEvent.type;
     }
     console.log("Form Time: ",formTime);
