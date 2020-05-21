@@ -60,9 +60,13 @@ const EventForm = ({refresh, myEvent, id}) => {
                 .then(() => setType(''))
                 .then(() => refresh())
         }
-        
     }
-
+    let renderSubmit;
+    if(myEvent){
+        renderSubmit = <input key="Edit" value="Edit Event" type="submit"></input>
+    } else {
+        renderSubmit = <input key="Add" value="Add Event" type="submit"/>
+    }
     return (
         <form onSubmit={handleSubmit}>
             <input placeholder="Event Name" value={name} type="text" 
@@ -82,7 +86,7 @@ const EventForm = ({refresh, myEvent, id}) => {
                 <option value= "Meeting">Meeting</option>
                 <option value= "Reminder">Reminder</option>
             </select>
-            <input value="Add Event" type="submit"/>
+            {renderSubmit}
         </form>
     )
 }
