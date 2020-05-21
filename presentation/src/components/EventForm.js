@@ -11,27 +11,22 @@ const EventForm = ({refresh, myEvent, id}) => {
         formDesc = myEvent.desc;
         formDate = myEvent.date.slice(0, 10);
         let tempDate = new Date(myEvent.date);
-        let tempHour = tempDate.getHours();
+        let tempHour = tempDate.getHours();     //the time input expects 12:00AM to be 00:00
         let tempMin = tempDate.getMinutes();
-        console.log("TempHour: ", tempHour);
         if(tempHour < 10) {
             tempHour = '0' + tempHour;
         }
         if(tempMin < 10) {
             tempMin = '0' + tempMin;
         }
-        console.log("TempMin: ", tempMin);
         formTime = tempHour + ":" + tempMin;
         formType = myEvent.type;
     }
-    console.log("Form Time: ",formTime);
     const [name, setName] = useState(formName);
     const [desc, setDesc] = useState(formDesc);
     const [date, setDate] = useState(formDate);   //Stores Month, Day, and Year
     const [time, setTime] = useState(formTime);   //Stores Hour, Minutes, and AM/PM
     const [type, setType] = useState(formType);
-
-
 
     const handleSubmit = (e) => {           //While I usually spell out event, I don't here because of event becoming overloaded
         e.preventDefault();
