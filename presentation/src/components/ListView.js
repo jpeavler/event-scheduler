@@ -44,9 +44,14 @@ const ListView = () => {
         if (parseInt(displayMin) < 10){             //Ensures that minute display is always 2 digits
             displayMin = '0'.concat(displayMin);
         }
+        let displayPast;
+        if(displayDate < Date.now()){
+            displayPast = "Past Event: "
+        }
         return (
             <div key={myEvent._id} className="event">
-                <h3>{myEvent.name}- {displayDate.toDateString()} at {displayHour}:{displayMin}{midday}</h3> 
+                
+                <h3>{displayPast}{myEvent.name}- {displayDate.toDateString()} at {displayHour}:{displayMin}{midday}</h3> 
                 <button onClick={() => handleUpdate(myEvent)}>Edit</button>
                 <button onClick={() => handleDelete(myEvent._id)}>Delete</button> 
                 <p>{myEvent.type}. {myEvent.desc}</p>
