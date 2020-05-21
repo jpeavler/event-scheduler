@@ -62,8 +62,11 @@ const EventForm = ({refresh, myEvent, id}) => {
         }
     }
     let renderSubmit;
+    let cancel;
     if(myEvent){
-        renderSubmit = <input key="Edit" value="Edit Event" type="submit"></input>
+        renderSubmit = <input key="Edit" value="Edit Event" type="submit"/>
+        cancel = <button type="button" key="cancel" 
+                onClick={() => refresh()}>Cancel Edit</button>
     } else {
         renderSubmit = <input key="Add" value="Add Event" type="submit"/>
     }
@@ -87,6 +90,7 @@ const EventForm = ({refresh, myEvent, id}) => {
                 <option value= "Reminder">Reminder</option>
             </select>
             {renderSubmit}
+            {cancel}
         </form>
     )
 }
