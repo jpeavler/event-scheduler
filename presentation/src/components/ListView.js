@@ -21,7 +21,12 @@ const ListView = () => {
         setEventToUpdate(eventUp);
         setUpdate(true);
     }
-
+    const handleDelete = (id) => {
+        fetch(`${process.env.REACT_APP_API_URL}/api/scheduler/${id}`, {
+            method: 'DELETE'
+        }).then(response => response.json())
+            .then(getList)
+    }
     const displayList = list.map((myEvent) => {
         const displayDate = new Date(myEvent.date);
         let midday = "AM";
@@ -43,7 +48,7 @@ const ListView = () => {
             <div key={myEvent._id} className="event">
                 <h3>{myEvent.name}- {displayDate.toDateString()} at {displayHour}:{displayMin}{midday}</h3> 
                 <button onClick={() => handleUpdate(myEvent)}>Edit</button>
-                <button>Delete</button> 
+                <button onClick={() => handleDelete(myEvent._id)}>Delete</button> 
                 <p>{myEvent.type}. {myEvent.desc}</p>
             </div>
         )
