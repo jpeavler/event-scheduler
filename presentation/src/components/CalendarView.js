@@ -62,6 +62,8 @@ const CalendarView = () => {
             return (
                 <div key={myEvent._id}>
                     <h3>{displayPast}{myEvent.name} at {displayHour}:{displayMin}</h3>
+                    <button onClick={() => handleUpdate(myEvent)}>Edit</button>
+                    <button onClick={() => handleDelete(myEvent._id)}>Delete</button> 
                     <p>{myEvent.type}. {myEvent.desc}</p>
                 </div>
             )
