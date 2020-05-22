@@ -107,8 +107,10 @@ const CalendarView = () => {
                 return (
                     <div key={myEvent._id}>
                         <h4>{displayPast}{myEvent.name} at {displayHour}:{displayMin}{midday}</h4>
-                        <button onClick={() => handleUpdate(myEvent)}>Edit</button>
-                        <button onClick={() => handleDelete(myEvent._id)}>Delete</button> 
+                        <button className='myButton' 
+                            onClick={() => handleUpdate(myEvent)}>Edit</button>
+                        <button className='myButton' 
+                            onClick={() => handleDelete(myEvent._id)}>Delete</button> 
                         <p>{myEvent.type}. {myEvent.desc}</p>
                     </div>
                 )
@@ -136,11 +138,11 @@ const CalendarView = () => {
 
     return (
         <div className="calview">
-            {renderForm}
             <Calendar tileContent={tileContent} 
                 onClickDay={onClickDay} 
                 className="myCalendar" 
                 tileClassName={tileClassName}/>
+            {renderForm}
             <h3>Events for Selected Date {dateClicked.toString().slice(0,15)}</h3>
             {dateEventDisplay}
         </div>

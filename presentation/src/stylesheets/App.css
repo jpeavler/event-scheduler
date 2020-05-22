@@ -9,14 +9,30 @@ button.EventDays {
   background-color: lightblue;
 }
 form {
-  width: 180px;
+  width: 300px;
   display: flex;
   flex-flow: row wrap;
   margin: auto;
+  margin-top: 10px;
 }
 form > * {
-  width: 180px;
+  width: 300px;
+  height: 20px;
 }
 .myCalendar {
   margin: auto;
+  margin-top: 10px;
+}
+@media all and (max-width: 600px){
+  form {
+    width: 80vw;
+  }
+  form > input, form > textarea, form > select {
+    width: 80vw;
+    height: 40px;
+  }
+  button.myButton {
+    width: 80vw;
+    height: 40px;
+  }
 }
