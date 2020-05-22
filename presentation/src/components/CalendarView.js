@@ -62,19 +62,55 @@ const CalendarView = () => {
             }
             return (
                 <div key={myEvent._id}>
-                    <h3>{displayPast}{myEvent.name} at {displayHour}:{displayMin}</h3>
-                    <button onClick={() => handleUpdate(myEvent)}>Edit</button>
-                    <button onClick={() => handleDelete(myEvent._id)}>Delete</button> 
-                    <p>{myEvent.type}. {myEvent.desc}</p>
+                    {myEvent.name} at {displayHour}:{displayMin}
                 </div>
             )
         });
     }
     let dateEventDisplay;
     if(dateClicked) {
-        dateEventDisplay = <div key={dateClicked}>Should be visible: {dateClicked.toString()}</div>
+        let clickedDate = new Date(dateClicked);
+        let eventOnClickedDay = list.filter(event => {
+            let tempDate = new Date(event.date);
+            return tempDate.getFullYear() == clickedDate.getFullYear() 
+                && tempDate.getMonth() == clickedDate.getMonth()
+                && tempDate.getDate() == clickedDate.getDate()
+        });
+        dateEventDisplay = eventOnClickedDay.map((myEvent) => {
+                const displayDate = new Date(myEvent.date);
+                let midday = "AM";
+                let displayHour = displayDate.getHours();
+                if (parseInt(displayHour) >= 12) {           //Converts military time to actual time
+                    midday = "PM";
+                }
+                if (parseInt(displayHour) > 12) {
+                    displayHour = parseInt(displayHour) - 12;
+                }
+                if (parseInt(displayHour) == 0) {
+                    displayHour = parseInt(displayHour) + 12;
+                }
+                let displayMin = displayDate.getMinutes(); 
+                if (parseInt(displayMin) < 10){             //Ensures that minute display is always 2 digits
+                    displayMin = '0'.concat(displayMin);
+                }
+                let displayPast;
+                if(displayDate < Date.now()){
+                    displayPast = "Past Event: "
+                }
+                return (
+                    <div key={myEvent._id}>
+                        <h4>{displayPast}{myEvent.name} at {displayHour}:{displayMin}{midday}</h4>
+                        <button onClick={() => handleUpdate(myEvent)}>Edit</button>
+                        <button onClick={() => handleDelete(myEvent._id)}>Delete</button> 
+                        <p>{myEvent.type}. {myEvent.desc}</p>
+                    </div>
+                )
+        });
+        if(eventOnClickedDay.length == 0){
+            dateEventDisplay = <div key= "empty">No events for selected date</div>
+        }
     } else {
-        dateEventDisplay = <div key="empty">Select a date for its event content</div>
+        dateEventDisplay = <div key="nodate">Select a date for its event content</div>
     }
     const onClickDay = (value, event) => {
         setDateClicked(new Date(value));
@@ -91,6 +127,7 @@ const CalendarView = () => {
         <div className="calview">
             {renderForm}
             <Calendar tileContent={tileContent} onClickDay={onClickDay}/>
+            <h3>Events on Selected Date</h3>
             {dateEventDisplay}
         </div>
     )
