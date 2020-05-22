@@ -8,6 +8,7 @@ const CalendarView = () => {
     const [list, setList] = useState([]);
     const [update, setUpdate] = useState(false);
     const [eventToUpdate, setEventToUpdate] = useState('');
+    const [dateClicked, setDateClicked] = useState('');
 
     useEffect(() => {
         getList();
@@ -69,6 +70,15 @@ const CalendarView = () => {
             )
         });
     }
+    let dateEventDisplay;
+    if(dateClicked) {
+        dateEventDisplay = <div key={dateClicked}>Should be visible: {dateClicked.toString()}</div>
+    } else {
+        dateEventDisplay = <div key="empty">Select a date for its event content</div>
+    }
+    const onClickDay = (value, event) => {
+        setDateClicked(new Date(value));
+    }
     
     let renderForm;
     if(update) {
@@ -80,7 +90,8 @@ const CalendarView = () => {
     return (
         <div className="calview">
             {renderForm}
-            <Calendar tileContent={tileContent}/>
+            <Calendar tileContent={tileContent} onClickDay={onClickDay}/>
+            {dateEventDisplay}
         </div>
     )
 }
