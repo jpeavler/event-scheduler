@@ -56,13 +56,9 @@ const CalendarView = () => {
             if (parseInt(displayMin) < 10){             //Ensures that minute display is always 2 digits
                 displayMin = '0'.concat(displayMin);
             }
-            let displayPast;
-            if(displayDate < Date.now()){
-                displayPast = "Past Event: "
-            }
             return (
                 <div key={myEvent._id}>
-                    {myEvent.name} at {displayHour}:{displayMin}
+                    {myEvent.name} at {displayHour}:{displayMin}{midday}
                 </div>
             )
         });
@@ -107,7 +103,7 @@ const CalendarView = () => {
                 )
         });
         if(eventOnClickedDay.length == 0){
-            dateEventDisplay = <div key= "empty">No events for selected date</div>
+            dateEventDisplay = <div key= "empty">No events for this date</div>
         }
     } else {
         dateEventDisplay = <div key="nodate">Select a date for its event content</div>
@@ -118,16 +114,20 @@ const CalendarView = () => {
     
     let renderForm;
     if(update) {
-        renderForm = <EventForm key={eventToUpdate._id} isUpdate={update} refresh={getList} myEvent ={eventToUpdate} id={eventToUpdate._id}/>
+        renderForm = <EventForm key={eventToUpdate._id} 
+            isUpdate={update} refresh={getList} 
+            myEvent ={eventToUpdate} 
+            id={eventToUpdate._id}/>
     } else {
-        renderForm = <EventForm key="Create" isUpdate={update} refresh={getList}/>
+        renderForm = <EventForm key="Create" 
+            isUpdate={update} refresh={getList}/>
     }
 
     return (
         <div className="calview">
             {renderForm}
             <Calendar tileContent={tileContent} onClickDay={onClickDay}/>
-            <h3>Events on Selected Date</h3>
+            <h3>Events for Selected Date {dateClicked.toString().slice(0,15)}</h3>
             {dateEventDisplay}
         </div>
     )
