@@ -1,14 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-import './App.css';
+import './stylesheets/App.css';
 import ListView from './components/ListView';
 import CalendarView from './components/CalendarView';
 
-function App() {
+const App = () => {
+  const [isCalView, setCalView] = useState(true);
+  let toggleViewButton;
+  let view;
+  if(isCalView) {
+    view = <CalendarView/>
+    toggleViewButton = <button onClick={() => setCalView(false)}>Switch to List View</button>
+  } else {
+    view = <ListView/>
+    toggleViewButton = <button onClick={() => setCalView(true)}>Switch to Calendar View</button>
+  }
   return (
     <div className="App">
-      <ListView/>
-      <CalendarView/>
+      {toggleViewButton}
+      {view}
     </div>
   );
 }

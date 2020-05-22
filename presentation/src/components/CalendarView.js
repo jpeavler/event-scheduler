@@ -57,11 +57,21 @@ const CalendarView = () => {
                 displayMin = '0'.concat(displayMin);
             }
             return (
-                <div key={myEvent._id}>
-                    {myEvent.name} at {displayHour}:{displayMin}{midday}
+                <div key={myEvent._id}  className="Event">
+                   {displayHour}:{displayMin}{midday}
                 </div>
             )
         });
+    }
+    const tileClassName = ({date, view}) => {
+        let calDate = new Date(date);
+        let eventDays = list.filter(event => {
+            let tempDate = new Date(event.date);
+            return tempDate.getFullYear() == calDate.getFullYear()
+                && tempDate.getMonth() == calDate.getMonth()
+                && tempDate.getDate() == calDate.getDate()               
+        });
+        return eventDays.length ? 'EventDays' : null;
     }
     let dateEventDisplay;
     if(dateClicked) {
@@ -71,6 +81,7 @@ const CalendarView = () => {
             return tempDate.getFullYear() == clickedDate.getFullYear() 
                 && tempDate.getMonth() == clickedDate.getMonth()
                 && tempDate.getDate() == clickedDate.getDate()
+
         });
         dateEventDisplay = eventOnClickedDay.map((myEvent) => {
                 const displayDate = new Date(myEvent.date);
@@ -126,7 +137,10 @@ const CalendarView = () => {
     return (
         <div className="calview">
             {renderForm}
-            <Calendar tileContent={tileContent} onClickDay={onClickDay}/>
+            <Calendar tileContent={tileContent} 
+                onClickDay={onClickDay} 
+                className="myCalendar" 
+                tileClassName={tileClassName}/>
             <h3>Events for Selected Date {dateClicked.toString().slice(0,15)}</h3>
             {dateEventDisplay}
         </div>

@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+}
+div.Event {
+  color: blue;
+  font-size: 8px;
+}
+button.EventDays {
+  background-color: lightblue;
+}
+form {
+  width: 180px;
+  display: flex;
+  flex-flow: row wrap;
+  margin: auto;
+}
+form > * {
+  width: 180px;
+}
+.myCalendar {
+  margin: auto;
+}
